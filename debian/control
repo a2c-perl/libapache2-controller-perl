@@ -1,0 +1,67 @@
+Source: libapache2-controller-perl
+Section: perl
+Priority: optional
+Maintainer: Mark Hedges <hedges@formdata.biz>
+Uploaders: Roberto C. Sanchez <roberto@connexer.com>
+Build-Depends: debhelper (>= 9.20120312),
+ quilt,
+ perl,
+ apache2-dev
+Build-Depends-Indep: libapache-session-perl,
+ libapache2-mod-perl2 (>= 1.12),
+ libapache2-request-perl,
+ libdatetime-perl,
+ libdbd-sqlite3-perl,
+ libdbi-perl,
+ libexception-class-perl,
+ libhttp-cookies-perl,
+ libhttp-message-perl,
+ libhttp-server-simple-perl,
+ liblist-moreutils-perl,
+ liblog-dispatch-perl,
+ liblog-log4perl-perl,
+ liblwpx-paranoidagent-perl,
+ libmath-bigint-gmp-perl,
+ libnet-openid-consumer-perl,
+ libnet-openid-server-perl,
+ libreadonly-perl,
+ libtemplate-perl,
+ libtest-pod-coverage-perl,
+ libtest-pod-perl,
+ liburi-perl,
+ libwww-perl,
+ libyaml-syck-perl
+Standards-Version: 3.9.5
+Homepage: https://metacpan.org/release/Apache2-Controller
+Vcs-Browser: http://anonscm.debian.org/gitweb/?p=collab-maint/libapache2-controller-perl.git
+Vcs-Git: git://anonscm.debian.org/collab-maint/libapache2-controller-perl.git
+
+Package: libapache2-controller-perl
+Architecture: all
+Depends: ${misc:Depends}, ${perl:Depends},
+ libapache-session-perl,
+ libapache2-mod-perl2,
+ libapache2-request-perl,
+ libdatetime-perl,
+ libexception-class-perl,
+ libhttp-message-perl,
+ liblist-moreutils-perl,
+ liblog-dispatch-perl,
+ liblog-log4perl-perl,
+ liblwpx-paranoidagent-perl,
+ libnet-openid-consumer-perl,
+ libnet-openid-server-perl,
+ libreadonly-perl,
+ libtemplate-perl,
+ liburi-perl,
+ libyaml-syck-perl
+Description: fast MVC-style Apache2 handler apps
+ Your application IS the controller. A2C gets all the abstractions out from
+ between your controller logic and the Apache2 methods to control input/output,
+ status etc. You control Apache2 directly, or use a rendering base like
+ Apache2::Controller::Render::Template which gives a method to render using
+ Template Toolkit.
+ .
+ For Apache2 config file setup see Apache2::Controller::Dispatch, which sets a
+ PerlResponseHandler of Apache::Controller, which then creates your controller
+ object and calls the chosen method for the uri.

@@ -1,0 +1,5 @@
+libapache2-controller-perl (1.1.0-1) unstable; urgency=low
+
+  * Initial Release (Closes: #747556).
+
+ -- Roberto C. Sanchez <roberto@connexer.com>  Fri, 9 May 2014 18:44:12 +0000
