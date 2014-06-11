@@ -2,8 +2,6 @@
 
 # @ServerRoot@ = t directory
 
-LoadModule apreq_module /usr/lib/apache2/modules/mod_apreq2.so
-
 # where Apache2::Controller and the test application libs can be found
 PerlSwitches -I@ServerRoot@/lib
 
