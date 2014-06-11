@@ -55,13 +55,11 @@ Depends: ${misc:Depends}, ${perl:Depends},
  libtemplate-perl,
  liburi-perl,
  libyaml-syck-perl
-Description: fast MVC-style Apache2 handler apps
- Your application IS the controller. A2C gets all the abstractions out from
- between your controller logic and the Apache2 methods to control input/output,
- status etc. You control Apache2 directly, or use a rendering base like
- Apache2::Controller::Render::Template which gives a method to render using
- Template Toolkit.
+Description: fast MVC-style Apache2 mod_perl2 handler app framework
+ Apache2::Controller organizes subclassed Apache2::Request handler objects in
+ an MVC module structure. A YAML file maps url paths to modules. $self is $r,
+ the subclassed XS APR bindings with libapreq methods to load query string,
+ etc. Stream with $r->print or use a parallel web tree of Template::Toolkit
+ files. Hook in any model class like DBIx::Class or direct SQL or sockets,
+ connections cached across requests. Session cookie plugin. Other great stuff.
  .
- For Apache2 config file setup see Apache2::Controller::Dispatch, which sets a
- PerlResponseHandler of Apache::Controller, which then creates your controller
- object and calls the chosen method for the uri.
