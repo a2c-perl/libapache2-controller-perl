@@ -1,5 +1,7 @@
 package Apache2::Controller;
 
+=encoding utf8
+
 =head1 NAME
 
 Apache2::Controller - fast MVC-style Apache2 handler apps
