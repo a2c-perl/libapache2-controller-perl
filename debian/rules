@@ -1,7 +1,0 @@
-#!/usr/bin/make -f
-
-export APACHE_TEST_HTTPD=/usr/sbin/apache2
-export APACHE_TEST_APXS=/usr/bin/apxs2
-
-%:
-	dh $@ --with=quilt
