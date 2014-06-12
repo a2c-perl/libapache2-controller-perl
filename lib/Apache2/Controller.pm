@@ -25,7 +25,7 @@ This is a drawback of using L<Apache::Test>.
 
 =head1 SYNOPSIS
 
-Your application IS the controller.  A2C gets all the 
+The handler IS the controller.  A2C gets all the 
 abstractions out from between your controller logic and
 the Apache2 methods to control input/output, status etc.
 You control Apache2 directly, or use a rendering base like 
@@ -127,18 +127,6 @@ to the methods directly via C<< $self >>, simply use
 L<Apache2::Request> as a base and it will auto-delegate
 all the methods.  
 See L<Apache2::Request/SUBCLASSING Apache2::Request>.
-
-=for comment
-
-L<Apache2::Controller::Upload> early in your C<use base> list, 
-which will add the methods from L<Apache2::Upload> when the
-L<Apache2::Request> object gets created.
-L<Apache2::Controller::Uploads> is a second base module for controller 
-modules to inherit from to allow file uploads and provide various handy 
-file conversion routines, if you have the appropriate binaries 
-installed.
-
-=pod
 
 For using other Apache2::Controller extension methods, use 
 another base class like 
@@ -974,8 +962,6 @@ L<Apache2::Controller::Methods>
 L<Apache2::Controller::X>
 
 L<Apache2::Controller::Dispatch>
-
-L<Apache2::Controller::Uploads>
 
 L<Apache2::Controller::Session>
 
