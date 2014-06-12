@@ -6,7 +6,8 @@ Uploaders: Roberto C. Sanchez <roberto@connexer.com>
 Build-Depends: debhelper (>= 9.20120312),
  quilt,
  perl,
- apache2-dev
+ apache2-dev,
+ apache2-bin
 Build-Depends-Indep: libapache-session-perl,
  libapache2-mod-perl2 (>= 1.12),
  libapache2-request-perl,
