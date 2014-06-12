@@ -23,6 +23,7 @@ my %exclude = map {($_=>1)} qw(
 
 my @modules = grep !$exclude{$_}, all_modules();
 #diag("modules testing:\n".Dump(\@modules));
+plan tests => scalar(@modules);
 pod_coverage_ok($_, "$_ is covered") for @modules;
 
 #all_pod_coverage_ok();
