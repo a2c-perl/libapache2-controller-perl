@@ -50,6 +50,7 @@ has no methods.
  # /etc/myapp/dispatch.yaml:
  foo:       MyApp::Controller::Foo
  bar:       MyApp::Controller::Bar
+ 'foo/bar': MyApp::Controller::Foo::Bar
  biz:       MyApp::C::Biz
  'biz/baz': MyApp::Controller::Biz::Baz
 
@@ -81,6 +82,7 @@ has no methods.
  sub dispatch_map { return {
      foo        => 'MyApp::C::Foo',
      bar        => 'MyApp::C::Bar',
+     'foo/bar'  => 'MyApp::C::Foo::Bar',
      biz        => 'MyApp::C::Biz',
      'biz/baz'  => 'MyApp::C::Biz::Baz',
  } }
