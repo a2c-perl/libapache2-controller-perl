@@ -7,7 +7,6 @@ PerlSwitches -I@ServerRoot@/lib
 
 PerlLoadModule Apache2::Request
 PerlLoadModule Apache2::RequestRec
-PerlLoadModule Apache2::Upload
 PerlLoadModule Apache2::RequestUtil
 PerlLoadModule Apache2::Cookie
 PerlLoadModule Apache2::RequestIO
