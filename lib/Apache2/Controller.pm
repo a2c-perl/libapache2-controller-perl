@@ -8,12 +8,12 @@ Apache2::Controller - fast MVC-style Apache2 handler apps
 
 =head1 VERSION
 
-Version 1.001.000
+Version 1.001.001
 
 =cut
 
 use version;
-our $VERSION = version->new('1.001.000');
+our $VERSION = version->new('1.001.001');
 
 =head1 INSTALLATION PRE-REQUISITES
 
@@ -993,6 +993,9 @@ and all the great people on the modperl mailing list.
 Special thanks to Nobuo Danjou for Apache2::AuthenOpenID
 which edumacated me on how the OpenID authen module
 should work.
+
+Super thanks to Roberto C. Sánchez for help packaging
+up A2C for Debian distribution.
 
 Of course, thanks to the many mod_perl and Apache authors
 and all the CPAN authors whose modules this depends on.
