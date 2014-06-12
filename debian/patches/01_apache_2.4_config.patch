@@ -1,14 +1,16 @@
 Description: Load worker MPM, to prevent error message "apache2: Configuration error: No MPM loaded.", resulting from changes in Apache 2.4.
 Author: Roberto C. Sanchez <roberto@connexer.com>
---- libapache2-controller-perl-1.1.0.orig/t/conf/extra.last.conf.in
-+++ libapache2-controller-perl-1.1.0/t/conf/extra.last.conf.in
-@@ -2,6 +2,9 @@
+--- libapache2-controller-perl-1.1.1.orig/t/conf/extra.last.conf.in 2014-06-12 14:30:49.531367000 -0700
++++ libapache2-controller-perl-1.1.1/t/conf/extra.last.conf.in  2014-06-12 15:37:46.036756000 -0700
+@@ -2,6 +2,11 @@
  
  # @ServerRoot@ = t directory
  
++# load modules for Debian build to prevent Apache 2.4 error message "No MPM loaded"
 +LoadModule mpm_worker_module /usr/lib/apache2/modules/mod_mpm_worker.so
 +LoadModule authz_core_module /usr/lib/apache2/modules/mod_authz_core.so
 +LoadModule authn_core_module /usr/lib/apache2/modules/mod_authn_core.so
- LoadModule apreq_module /usr/lib/apache2/modules/mod_apreq2.so
- 
++
  # where Apache2::Controller and the test application libs can be found
+ PerlSwitches -I@ServerRoot@/lib
+
