@@ -41,8 +41,6 @@ use YAML::Syck;
 use Apache2::Controller::X;
 use Apache2::Const -compile => qw( NOT_FOUND );
 
-#use UNIVERSAL qw( isa );
-
 our @EXPORT_OK = qw(
     controller_allows_method
     check_allowed_method
