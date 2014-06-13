@@ -1,6 +1,5 @@
 Build.PL
 Changes
-README.TODO
 README.txt
 lib/Apache2/Controller.pm
 lib/Apache2/Controller/Auth/OpenID.pm
@@ -74,3 +73,5 @@ util/apache2_http_response_reference_list.pl
 MANIFEST
 MANIFEST.SKIP
 META.json
+Makefile.PL
+META.yml
