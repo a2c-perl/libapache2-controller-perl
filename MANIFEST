@@ -1,7 +1,5 @@
 Build.PL
 Changes
-META.yml
-Makefile.PL
 README.TODO
 README.txt
 lib/Apache2/Controller.pm
