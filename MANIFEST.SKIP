@@ -58,7 +58,8 @@
 #!end included /ntfhome/software/perl/5.20.0/lib/5.20.0/ExtUtils/MANIFEST.SKIP
 
 # Avoid archives of this distribution
-\bApache2-Controller-[\d\.\_]+
+\bApache2-Controller-v?[\d\.\_]+
+\bApache2-Controller-v?[\d\.\_]+\.tar\.gz
 
 # vim swap files
 \b\.*\.swp
