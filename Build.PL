@@ -54,8 +54,8 @@ my @recommends = qw(
 
 use Module::Build;
 
-my $build_pkg = eval { require Apache::TestMB }
-    ? 'Apache::TestMB' : 'Module::Build';
+eval 'require Apache::TestMB';
+my $build_pkg = $@ ? 'Module::Build' : 'Apache::TestMB';
 
 my $build = $build_pkg->new(
     module_name         => 'Apache2::Controller',
