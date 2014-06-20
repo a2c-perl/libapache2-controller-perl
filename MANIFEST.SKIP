@@ -75,3 +75,7 @@
 
 # backups of this file
 ^MANIFEST\.SKIP\.bak
+
+# generated files
+^Makefile.PL
+^META\.
