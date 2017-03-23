@@ -1,0 +1,3 @@
+default: Sample::App
+protected: Sample::Protected
+auth: Sample::Auth
