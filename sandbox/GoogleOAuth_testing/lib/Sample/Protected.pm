@@ -51,7 +51,7 @@ sub default {
         );
         my $auth_url = $client->uri_to_redirect(
             redirect_uri => $AUTH_URL,
-            scope        => q{openid profile email},
+            scope        => q{openid https://www.googleapis.com/auth/plus.profile.emails.read profile},
             state        => sha256_hex( rand() ),
         );
 

@@ -12,12 +12,17 @@ sub allowed_methods { qw( default ) }
 
 use OIDC::Lite::Client::WebServer;
 
+use LWP::UserAgent;
+use HTTP::Request;
+use JSON qw(decode_json);
+
 our $CLIENT_ID =
   '204988223104-b54ttna4r29a1dmmmoteq0m6evr8ekvc.apps.googleusercontent.com';
 our $CLIENT_SECRET = '8XHaqYiKTrydhWCyEb_v4wMK';
 
 my $AUTH_URL = 'http://ec2-35-167-28-203.us-west-2.compute.amazonaws.com/auth';
 
+my $SECRET = 'foo';
 use Crypt::Digest::SHA256 qw(sha256_hex);
 
 sub default {
@@ -37,18 +42,26 @@ sub default {
         code         => $code,
         redirect_uri => $AUTH_URL,
     ) or print STDERR $client->errstr;
-
+    
     if ($access_token) {
-        die("GET EMAIL HERE");
 
-        #        my $email = 'foo';
-        #        my $value = $email . ':' . sha256_hex( $SECRET, $email );
-        #        Apache2::Cookie->new(
-        #            $self,
-        #            -name    => 'LOGIN',
-        #            -value   => $value,
-        #            -expires => '+3M'
-        #        )->bake($self);
+        my $ua = LWP::UserAgent->new;
+        my $req = HTTP::Request->new(GET => 'https://www.googleapis.com/plus/v1/people/me');
+        $req->header(Authorization => "Bearer " . $access_token->access_token);
+
+        my $res = $ua->request($req);
+        if ($res->is_success) {
+            my $profile = decode_json($res->content);
+            my $email = $profile->{emails}[0]{value};
+      
+            my $value = $email . ':' . sha256_hex( $SECRET, $email );
+            Apache2::Cookie->new(
+                $self,
+                -name    => 'LOGIN',
+                -value   => $value,
+                -expires => '+3M'
+            )->bake($self);
+        }
 
         $self->err_headers_out->add( Location => '/protected' );
         return Apache2::Const::REDIRECT;
