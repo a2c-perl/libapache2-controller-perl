@@ -284,6 +284,31 @@ my @directives = (
         args_how        => Apache2::Const::NO_ARGS,
         errmsg          => 'example: A2C_Auth_OpenID_NoPreserveParams',
     },
+    # A2C:Auth::Google
+    {
+        name            => 'A2C_Auth_Google_Client_ID',
+        req_override    => Apache2::Const::OR_ALL,
+        args_how        => Apache2::Const::TAKE1,
+        errmsg          => 'example: A2C_Auth_Google_Client_ID id-string',
+    },
+    {
+        name            => 'A2C_Auth_Google_Client_Secret',
+        req_override    => Apache2::Const::OR_ALL,
+        args_how        => Apache2::Const::TAKE1,
+        errmsg          => 'example: A2C_Auth_Google_Client_Secret secret',
+    },
+    {
+        name            => 'A2C_Auth_Google_Token_URL',
+        req_override    => Apache2::Const::OR_ALL,
+        args_how        => Apache2::Const::TAKE1,
+        errmsg          => 'example: A2C_Auth_Google_Token_URL /token',
+    },
+    {
+        name            => 'A2C_Auth_Google_Default_Redirect',
+        req_override    => Apache2::Const::OR_ALL,
+        args_how        => Apache2::Const::TAKE1,
+        errmsg          => 'example: A2C_Auth_Google_Default_Redirect /',
+    },
 );
 
 Apache2::Module::add(__PACKAGE__, \@directives);
@@ -960,6 +985,36 @@ sub A2C_Auth_OpenID_NoPreserveParams {
     my ($self, $parms) = @_;
     $self->{A2C_Auth_OpenID_NoPreserveParams} = 1;
 }
+
+=head2 A2C_Auth_Google_Client_ID 
+
+=head2 A2C_Auth_Google_Client_Secret
+
+=head2 A2C_Auth_Google_Default_Redirect
+
+=head2 A2C_Auth_Google_Token_URL
+
+Documented in L<Apache2::Controller::Auth::Google>.
+
+=cut
+
+sub A2C_Auth_Google_Client_ID {
+    my ($self, $parms, $val) = @_;
+    $self->{A2C_Auth_Google_Client_ID} = $val;
+}
+sub A2C_Auth_Google_Client_Secret {
+    my ($self, $parms, $val) = @_;
+    $self->{A2C_Auth_Google_Client_Secret} = $val;
+}
+sub A2C_Auth_Google_Default_Redirect {
+    my ($self, $parms, $val) = @_;
+    $self->{A2C_Auth_Google_Default_Redirect} = $val;
+}
+sub A2C_Auth_Google_Token_URL {
+    my ($self, $parms, $val) = @_;
+    $self->{A2C_Auth_Google_Token_URL} = $val;
+}
+
 
 =head2 hash_assign 
 
