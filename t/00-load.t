@@ -30,6 +30,7 @@ BEGIN {
         return if $libsubpath =~ m{ \. \w+ \z  }mxs; # oops, .swp and .exists
         $libsubpath =~ s{ \A .*? (Apache2/.*) \z }{$1}mxs;
         $libsubpath =~ s{ \A .*? (TestApp/.*) \z }{$1}mxs;
+        $libsubpath =~ s{ \A .*? (Sample/.*) \z }{$1}mxs;
         (my $lib = $libsubpath) =~ s{ / }{::}mxsg;
         push @libs, $lib;
     };

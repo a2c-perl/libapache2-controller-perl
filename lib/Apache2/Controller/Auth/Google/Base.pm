@@ -89,6 +89,12 @@ sub location_redirect {
     return Apache2::Const::REDIRECT;
 }
 
+# special testing mode that doesn't talk to Google but otherwise is testable
+sub test_mode {
+    my $self = shift;
+    return $self->{r}->dir_config('A2C_Auth_Google_Test_mode');
+}
+
 1;
 
 

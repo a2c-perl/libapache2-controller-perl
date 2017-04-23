@@ -34,6 +34,7 @@ use Apache2::Controller::X;
 
 sub process {
     my $self = shift;
+    my $session = $self->session;
 
     my $code = $self->param('code');
 
@@ -41,6 +42,7 @@ sub process {
         code         => $code,
         redirect_uri => $self->auth_url,
     );
+    
     if ($access_token) {
 
         # now fetch the user's email address to use as a username
@@ -50,8 +52,6 @@ sub process {
             GET => 'https://www.googleapis.com/plus/v1/people/me' );
         $req->header(
             Authorization => "Bearer " . $access_token->access_token );
-
-        my $session = $self->session;
 
         my $res = $ua->request($req);
         if ( $res->is_success ) {
@@ -73,8 +73,17 @@ sub process {
               or $self->default_destination
         );
 
-    }
-    else {
+    } elsif ($self->test_mode && $code eq 'FAKE') {
+        # pretend we just talked to google and they loved the code for
+        # testing
+        $session->{user} = 'test@example.com';
+        $session->{logged_in} = 1;
+        return $self->location_redirect(
+                 $session->{original_destination}
+              or $self->default_destination
+        );
+
+    } else {
         # we couldn't get an access token from google!
         warn $self->client->errstr;
         return Apache2::Const::FORBIDDEN;

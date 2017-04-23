@@ -93,3 +93,35 @@ PerlLoadModule TestApp::OpenID::Dispatch::Protected
     PerlHeaderParserHandler     Apache2::Controller::Auth::OpenID
 </Location>
 
+PerlSetVar A2C_Auth_Google_Client_ID     204988223104-b54ttna4r29a1dmmmoteq0m6evr8ekvc.apps.googleusercontent.com
+PerlSetVar A2C_Auth_Google_Client_Secret 8XHaqYiKTrydhWCyEb_v4wMK
+PerlSetVar A2C_Auth_Google_Token_URL     http://ec2-35-167-28-203.us-west-2.compute.amazonaws.com/auth
+PerlSetVar A2C_Auth_Google_Default_Redirect /
+PerlSetVar A2C_Auth_Google_Test_Mode     1
+
+# locations for testing google auth
+<Location /protected>
+      SetHandler modperl
+      A2C_Dispatch_Map @ServerRoot@/conf/dispatch/protected.yaml
+
+      PerlInitHandler Apache2::Controller::Dispatch::Simple
+
+      A2C_Session_Cookie_Opts     name    testapp_sessid
+      PerlHeaderParserHandler     TestApp::Session::Session
+      PerlAuthenHandler Apache2::Controller::Auth::Google
+      Require valid-user
+</Location>
+
+<Location /auth>
+      SetHandler modperl
+      A2C_Session_Cookie_Opts     name    testapp_sessid
+      PerlHeaderParserHandler     TestApp::Session::Session
+      PerlResponseHandler Apache2::Controller::Auth::Google::TokenHandler
+</Location>
+
+<Location /logout>
+      SetHandler modperl
+      A2C_Session_Cookie_Opts     name    testapp_sessid
+      PerlHeaderParserHandler     TestApp::Session::Session
+      PerlResponseHandler Apache2::Controller::Auth::Google::LogoutHandler
+</Location>
