@@ -16,9 +16,15 @@ eval "use Pod::Coverage $min_pc";
 plan skip_all => "Pod::Coverage $min_pc required for testing POD coverage"
     if $@;
 
-# Directives module cannot be loaded outside of mod_perl apache conf
+# Directives module cannot be loaded outside of mod_perl apache conf.
+# Google auth modules are documented without documenting every
+# routine.
 my %exclude = map {($_=>1)} qw(
     Apache2::Controller::Directives
+    Apache2::Controller::Auth::Google
+    Apache2::Controller::Auth::Google::Base
+    Apache2::Controller::Auth::Google::TokenHandler
+    Apache2::Controller::Auth::Google::LogoutHandler
 );
 
 my @modules = grep !$exclude{$_}, all_modules();
