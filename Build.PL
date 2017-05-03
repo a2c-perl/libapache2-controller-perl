@@ -21,10 +21,12 @@ my @requires = qw(
     File::Temp
     FindBin
     HTTP::Status
+    JSON::PP
     List::MoreUtils
     Log::Dispatch
     Log::Log4perl
     Net::OpenID::Consumer
+    OIDC::Lite
     Readonly
     Scalar::Util
     Template
