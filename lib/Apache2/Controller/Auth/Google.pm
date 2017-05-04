@@ -110,7 +110,7 @@ use base qw(Apache2::Controller::Auth::Google::Base);
 use English '-no_match_vars';
 use Carp qw( longmess );
 use Digest::SHA qw( sha256_hex );
-use OIDC::Lite::Client::WebServer;
+use Net::OAuth2::Profile::WebServer;
 use JSON::PP qw(decode_json);
 
 use Apache2::Const -compile => qw( OK SERVER_ERROR REDIRECT );
@@ -130,18 +130,22 @@ sub process {
 
     # get a URL to send the user to login, requesting profile access
     # so we can get an email
-    my $google_url = $self->client->uri_to_redirect(
-        redirect_uri => $self->auth_url,
-        scope        => q{openid }
+    my $google_url = Net::OAuth2::Profile::WebServer->new(
+        client_id     => $self->client_id,
+        client_secret => $self->client_secret,
+        site          => 'https://accounts.google.com',
+        scope         => q{openid }
           . q{https://www.googleapis.com/auth/plus.profile.emails.read }
           . q{profile},
-        state => sha256_hex( rand() ),
-    );
+        redirect_uri   => $self->auth_url,
+        state          => sha256_hex( rand() ),
+        authorize_path => '/o/oauth2/v2/auth',
+    )->authorize();
 
     # store the original destination in the session so we can redirect
     # there at the end
     $session->{original_destination} = $self->{r}->construct_url();
-
+    
     return $self->location_redirect($google_url);
 }
 
@@ -154,6 +158,5 @@ under the same terms as Perl itself.
 
 =cut
 
-1; # End of Apache2::Controller::Auth::Google
-
+1;    # End of Apache2::Controller::Auth::Google
 

@@ -25,23 +25,11 @@ use base qw(Apache2::Controller::NonResponseRequest);
 use English '-no_match_vars';
 use Carp qw( longmess );
 use Digest::SHA qw( sha256_hex );
-use OIDC::Lite::Client::WebServer;
 use JSON::PP qw(decode_json);
 
 use Apache2::Const -compile => qw( OK SERVER_ERROR REDIRECT );
 
 use Apache2::Controller::X;
-
-sub client {
-    my $self = shift;
-
-    return $self->{client} ||= OIDC::Lite::Client::WebServer->new(
-        id               => $self->client_id,
-        secret           => $self->client_secret,
-        authorize_uri    => 'https://accounts.google.com/o/oauth2/v2/auth',
-        access_token_uri => 'https://www.googleapis.com/oauth2/v4/token',
-    );
-}
 
 sub client_id {
     my $self = shift;

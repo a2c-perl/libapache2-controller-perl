@@ -25,8 +25,8 @@ my @requires = qw(
     List::MoreUtils
     Log::Dispatch
     Log::Log4perl
+    Net::OAuth2
     Net::OpenID::Consumer
-    OIDC::Lite
     Readonly
     Scalar::Util
     Template

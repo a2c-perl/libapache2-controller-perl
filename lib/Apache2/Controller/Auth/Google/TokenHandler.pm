@@ -25,7 +25,7 @@ use base qw(Apache2::Controller::Auth::Google::Base);
 use English '-no_match_vars';
 use Carp qw( longmess );
 use Digest::SHA qw( sha256_hex );
-use OIDC::Lite::Client::WebServer;
+use Net::OAuth2::Profile::WebServer;
 use JSON::PP qw(decode_json);
 
 use Apache2::Const -compile => qw( OK SERVER_ERROR REDIRECT );
@@ -37,11 +37,20 @@ sub process {
     my $session = $self->session;
 
     my $code = $self->param('code');
-
-    my $access_token = $self->client->get_access_token(
-        code         => $code,
-        redirect_uri => $self->auth_url,
-    );
+    my $access_token;
+    
+    if ( !$self->test_mode ) {
+        $access_token = Net::OAuth2::Profile::WebServer->new(
+            client_id     => $self->client_id,
+            client_secret => $self->client_secret,
+            site          => 'https://www.googleapis.com',
+            scope         => q{openid }
+              . q{https://www.googleapis.com/auth/plus.profile.emails.read }
+              . q{profile},
+            redirect_uri      => $self->auth_url,
+            access_token_path => '/oauth2/v4/token',
+        )->get_access_token($code);
+    }
     
     if ($access_token) {
 

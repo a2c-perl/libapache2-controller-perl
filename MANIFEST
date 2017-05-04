@@ -72,3 +72,6 @@ t/unit_exception_object.t
 util/apache2_http_response_reference_list.pl
 MANIFEST
 MANIFEST.SKIP
+Makefile.PL
+META.yml
+META.json

@@ -25,7 +25,6 @@ use base qw(Apache2::Controller::Auth::Google::Base);
 use English '-no_match_vars';
 use Carp qw( longmess );
 use Digest::SHA qw( sha256_hex );
-use OIDC::Lite::Client::WebServer;
 use JSON::PP qw(decode_json);
 
 use Apache2::Const -compile => qw( OK SERVER_ERROR REDIRECT );
