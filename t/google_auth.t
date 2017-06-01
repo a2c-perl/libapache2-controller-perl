@@ -31,10 +31,6 @@ $resp = GET $url;
 ok($resp->code == 302);
 
 # now we should be able to get the protected content
-
-# FIX: these sleeps help work around what appears to be a race
-# condition in the session system.
-sleep 2;
 $url = "/protected";
 $resp = GET $url;
 ok($resp->code == 200);

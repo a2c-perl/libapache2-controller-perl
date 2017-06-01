@@ -19,8 +19,7 @@ A2C_Render_Template_Path @ServerRoot@/templates/primary
 # preload the module
 <Location '/simple'>
     SetHandler modperl
-    A2C_Dispatch_Map @ServerRoot@/conf/dispatch/simple.yaml
-    PerlInitHandler Apache2::Controller::Dispatch::Simple
+    PerlInitHandler TestApp::Simple::Dispatch
 </Location>
 
 PerlLoadModule TestApp::Render::Dispatch
