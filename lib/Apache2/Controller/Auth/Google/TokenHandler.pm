@@ -28,6 +28,18 @@ use Digest::SHA qw( sha256_hex );
 use Net::OAuth2::Profile::WebServer;
 use JSON::PP qw(decode_json);
 
+# annoyingly enough, Google is returning JSON that JSON::XS can't
+# parse, but JSON::PP is fine with it.  Ideally we should find the bug
+# in JSON::XS but if/until then, force JSON::PP to be used by
+# Net::OAuth2::Profile.
+{
+    no warnings 'redefine';
+    no strict 'refs';
+    *{'Net::OAuth2::Profile::decode_json'} = sub ($) {
+        return decode_json(@_);
+    };
+}
+
 use Apache2::Const -compile => qw( OK SERVER_ERROR REDIRECT );
 
 use Apache2::Controller::X;
@@ -38,8 +50,15 @@ sub process {
 
     my $code = $self->param('code');
     my $access_token;
+
+    # allow the test code to tell us what the manual test auth URL is
+    # in test mode
+    my $auth_url = $self->auth_url;
+    if ($self->test_mode && $self->param('test_auth_url')) {
+        $auth_url = $self->param('test_auth_url');
+    }
     
-    if ( !$self->test_mode ) {
+    unless($self->test_mode && $code eq 'FAKE') {
         $access_token = Net::OAuth2::Profile::WebServer->new(
             client_id     => $self->client_id,
             client_secret => $self->client_secret,
@@ -47,7 +66,7 @@ sub process {
             scope         => q{openid }
               . q{https://www.googleapis.com/auth/plus.profile.emails.read }
               . q{profile},
-            redirect_uri      => $self->auth_url,
+            redirect_uri      => $auth_url,
             access_token_path => '/oauth2/v4/token',
         )->get_access_token($code);
     }

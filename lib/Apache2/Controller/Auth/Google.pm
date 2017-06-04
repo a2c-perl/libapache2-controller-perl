@@ -128,19 +128,11 @@ sub process {
         return Apache2::Const::OK;
     }
 
-    # get a URL to send the user to login, requesting profile access
-    # so we can get an email
-    my $google_url = Net::OAuth2::Profile::WebServer->new(
+    my $google_url = $self->_compute_google_auth_url(
         client_id     => $self->client_id,
         client_secret => $self->client_secret,
-        site          => 'https://accounts.google.com',
-        scope         => q{openid }
-          . q{https://www.googleapis.com/auth/plus.profile.emails.read }
-          . q{profile},
-        redirect_uri   => $self->auth_url,
-        state          => sha256_hex( rand() ),
-        authorize_path => '/o/oauth2/v2/auth',
-    )->authorize();
+        auth_url      => $self->auth_url
+    );
 
     # store the original destination in the session so we can redirect
     # there at the end
@@ -148,6 +140,75 @@ sub process {
     
     return $self->location_redirect($google_url);
 }
+
+sub _compute_google_auth_url {
+    my ($self, %args) = @_;
+    my $client_id = $args{client_id};
+    my $client_secret = $args{client_secret};
+    my $auth_url = $args{auth_url};
+    
+    # get a URL to send the user to login, requesting profile access
+    # so we can get an email
+    my $google_url = Net::OAuth2::Profile::WebServer->new(
+        client_id     => $client_id,
+        client_secret => $client_secret,
+        site          => 'https://accounts.google.com',
+        scope         => q{openid }
+          . q{https://www.googleapis.com/auth/plus.profile.emails.read }
+          . q{profile},
+        redirect_uri   => $auth_url,
+        state          => sha256_hex( rand() ),
+        authorize_path => '/o/oauth2/v2/auth',
+    )->authorize();
+
+    return $google_url;
+}
+
+=head1 MANUAL TESTING
+
+To run a test of this module that hits the live Google servers (as
+opposed to the default tests which use mock routines) you must do some
+setup and set several evironment variables.
+
+=over
+
+=item 1
+
+Go to https://console.developers.google.com/ and setup an API account
+with the Google+ turned on.
+
+=item 2
+
+Under "Credentials" create an OAuth 2 client ID and secret.  Set the
+"authorized redirect URI" to the URI of a page you can edit.  It can
+be on a domain of your own on or on S3.  For example, if you run
+C<sam.tregar.com> you could set it to
+C<http://sam.tregar.com/google_auth_test.html>.
+
+=item 3
+
+Edit the file pointed at by your redirect URI and copy this code into place:
+
+    <script language="javascript">
+    var parts = location.search.substring(1).split('&');
+    for (var i = 0; i < parts.length; i++) {
+        var nv = parts[i].split('=');
+        if (nv[0] == 'code') {
+            document.write("Copy and paste this code into your test window:<br><br><b> " + nv[1] + "</b><br><br>(Note this code is only good for one run.)");
+        }
+    }
+    </script>
+
+=item 4
+
+Run the test suite with three environment variables defined and using
+--verbose so you can see the prompt:
+
+  GOOGLE_AUTH_TEST_CLIENT_ID=XXXXX GOOGLE_AUTH_TEST_CLIENT_SECRET=XXXXX GOOGLE_AUTH_TEST_CLIENT_REDIRECT_URL=http://XXXX/XXXX.html ./Build test --verbose
+
+When the test pauses and gives you instructions, follow them.
+
+=back
 
 =head1 COPYRIGHT & LICENSE
 
