@@ -1,6 +1,25 @@
 
 Revision history for Apache2-Controller
 
+1.001.010   2017-07-21
+
+            Look for A2C in Debian!  Or not... maybe we'll make buster.
+            Still some work to be done to get this in shape for release.
+
+            Sam Tregar implemented Apache2::Controller::Auth::Google.
+            Future versions may include some improvements to this
+            type of authentication.  The stub for ::Auth::OpenID will
+            probably be removed in a future version since no one seems
+            to actually use OpenID anymore.
+
+            Testing under Debian requires a patched version of
+            Apache::Test provided by Sam Tregar.  We're going to
+            ask the Debian maintainers to implement it, because the
+            upstream mod_perl developers don't seem inclined.
+
+            Thanks, Sam!  (Sam at Tregar dott com)
+
+
 1.001.001   2014-06-11
 
             Was the UNIVERSAL bug fixed in the last version?  It looked 

@@ -7,12 +7,12 @@ Hash tree dispatch for L<Apache2::Controller::Dispatch>
 
 =head1 VERSION
 
-Version 1.001.001
+Version 1.001.010
 
 =cut
 
 use version;
-our $VERSION = version->new('1.001.001');
+our $VERSION = version->new('1.001.010');
 
 =head1 SYNOPSIS
 

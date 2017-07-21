@@ -2,13 +2,14 @@ Source: libapache2-controller-perl
 Section: perl
 Priority: optional
 Maintainer: Mark Hedges <hedges@formdata.biz>
-Uploaders: Roberto C. Sanchez <roberto@connexer.com>
+Uploaders: Mark Hedges <hedges@formdata.biz>
 Build-Depends: debhelper (>= 9.20120312),
  quilt,
  perl,
  apache2-dev,
- apache2-bin
-Build-Depends-Indep: libapache-session-perl,
+ apache2-bin,
+ libmodule-build-perl,
+ libapache-session-perl,
  libapache2-mod-perl2 (>= 1.12),
  libapache2-request-perl,
  libdatetime-perl,
@@ -55,7 +56,8 @@ Depends: ${misc:Depends}, ${perl:Depends},
  libreadonly-perl,
  libtemplate-perl,
  liburi-perl,
- libyaml-syck-perl
+ libyaml-syck-perl,
+ libnet-oauth2-perl
 Description: fast MVC-style Apache2 mod_perl2 handler app framework
  Apache2::Controller organizes subclassed Apache2::Request handler objects in
  an MVC module structure. A YAML file maps url paths to modules. $self is $r,
